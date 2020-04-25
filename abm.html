@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--Style scripts-->
+  <link rel="stylesheet" href="assets/css/abm.css" />
+
+  <!--Code scripts-->
+  <script type="text/javascript" src="assets/js/abm.js"></script>
+  <script type="text/javascript" src="assets/js/p5.js"></script>
+  <script type="text/javascript" src="assets/js/p5.sound.min.js"></script>
+</head>
+
+<body>
+  <!-- Insert title -->
+  <title style="font-family: sans-serif">Landowner Agent Based Model | Make It Spatial</title>
+
+  <!-- Insert heading -->
+  <h1 style="font-family: sans-serif; color: #FFFFFF">Landowner Agent Based Model</h1>
+
+  <!-- Insert model into page -->
+  <div id="abm">
+    <!-- model gets placed here -->
+  </div>
+
+  <!-- Insert development buttons -->
+  <button class="buttonBlue" onclick="randomDevelopment()" style="position: absolute; left: 430px; top: 80px">Randomize Development</button>
+  <button class="buttonBlue" onclick="clusterDevelopment()" style="position: absolute; left: 430px; top: 120px">Cluster Development</button>
+
+  <!-- Insert development slider -->
+  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 150px; color: #FFFFFF">Development Density</h3>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 200px">
+    <input type="range" min="25" max="75" value="50" class="slider" id="clusterDev">
+  </div>
+
+  <!-- Insert agent buttons -->
+  <button class="buttonRed" onclick="randomAgents()" style="position: absolute; left: 430px; top: 260px">Randomize Agents</button>
+  <button class="buttonRed" onclick="clusterAgents()" style="position: absolute; left: 430px; top: 300px">Cluster Agents</button>
+
+  <!-- Insert agent slider -->
+  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 330px; color: #FFFFFF">Agent Density</h3>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 380px">
+    <input type="range" min="1" max="10" value="5" class="slider" id="clusterAgnt">
+  </div>
+
+  <script type="text/javascript">
+    // -----------------------------------------------------------------------------
+    // INTERACTIVE ELEMENTS
+    // -----------------------------------------------------------------------------
+
+    // Provide variable to allow for cluster modification.
+    var sliderDev = document.getElementById("clusterDev");
+    var sliderAgnt = document.getElementById("clusterAgnt");
+
+    // Create function to randomize development.
+    function randomDevelopment() {
+      for (var i = 0; i < ncol; i++) {
+        for (var j = 0; j < nrow; j++) {
+          grid[i][j].undevelop();
+        }
+      }
+      var lev = sliderDev.value/100;
+      for (var i = 0; i < ncol; i++) {
+        for (var j = 0; j < nrow; j++) {
+          var val = Math.random();
+          if (val < lev) {
+            grid[i][j].develop();
+          } else {
+            continue
+          }
+        }
+      }
+    }
+
+    // Create function to cluster development.
+    function clusterDevelopment() {
+      for (var i = 0; i < ncol; i++) {
+        for (var j = 0; j < nrow; j++) {
+          grid[i][j].undevelop();
+        }
+      }
+      var sensitivity = sliderDev.value/100;
+      p5.prototype.noiseSeed(Math.round(Math.random()*100));
+      for (var i = 0; i < ncol; i++){
+        for (var j = 0; j < nrow; j++){
+          var val = p5.prototype.noise(i/10, j/10, 1.0);
+          if (val < sensitivity) {
+            grid[i][j].develop();
+          } else {
+            continue
+          }
+        }
+      }
+    }
+
+    // Create function to randomly assign agents.
+    function randomAgents() {
+      for (var i = 0; i < ncol; i++) {
+        for (var j = 0; j < nrow; j++) {
+          grid[i][j].agentLow = false;
+          grid[i][j].agentMed = false;
+          grid[i][j].agentHig = false;
+        }
+      }
+      for (var i = 0; i < ncol; i++) {
+        for (var j = 0; j < nrow; j++) {
+          if (!grid[i][j].developed) {
+            grid[i][j].assignAgent(randomInt(3));
+          } else {
+            continue;
+          }
+        }
+      }
+    }
+
+    // Create function to randomly assign agents in clusters.
+    function clusterAgents() {
+      for (var i = 0; i < ncol; i++) {
+        for (var j = 0; j < nrow; j++) {
+          grid[i][j].agentLow = false;
+          grid[i][j].agentMed = false;
+          grid[i][j].agentHig = false;
+        }
+      }
+      var sensitivity = sliderAgnt.value;
+      p5.prototype.noiseSeed(Math.round(Math.random()*100));
+      for (var i = 0; i < ncol; i++) {
+        for (var j = 0; j < nrow; j++) {
+          if (!grid[i][j].developed) {
+            var val = p5.prototype.noise(i/sensitivity, j/sensitivity, 1.0);
+            if (val <= 0.33) {
+              grid[i][j].assignAgent(0);
+            } else if (val <= 0.66) {
+              grid[i][j].assignAgent(1);
+            } else if (val <= 1.00) {
+              grid[i][j].assignAgent(2);
+            }
+          } else {
+            continue;
+        }
+      }
+    }
+  }
+
+  </script>
+
+</body>
+</html>
