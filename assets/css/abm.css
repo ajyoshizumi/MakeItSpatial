@@ -52,11 +52,36 @@ width: 200px;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+.buttonGreen {
+background-color: #FFFFFF;
+/* border: 2px solid #4156A1; */
+border-radius: 4px;
+color: #2E8B57;
+padding: 5px 5px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+margin: 4px 2px;
+cursor: pointer;
+-webkit-transition-duration: 0.2s; /* Safari */
+transition-duration: 0.2s;
+width: 200px;
+}
+
+.buttonGreen:hover {
+  background-color: #2E8B57;
+  color: #FFFFFF;
+  padding: 5px 5px;
+  border-radius: 4px;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 .slidecontainer {
 width: 100%;
 }
 
-.slider {
+.sliderBlue {
   -webkit-appearance: none;
   width: 200px;
   height: 15px;
@@ -67,10 +92,10 @@ width: 100%;
   -webkit-transition: opacity .15s ease-in-out;
   transition: opacity .15s ease-in-out;
 }
-.slider:hover {
+.sliderBlue:hover {
   opacity:1;
 }
-.slider::-webkit-slider-thumb {
+.sliderBlue::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 25px;
@@ -79,11 +104,51 @@ width: 100%;
   background: #4156A1;
   cursor: pointer;
 }
-.slider::-moz-range-thumb {
+.sliderBlue::-moz-range-thumb {
   width: 25px;
   height: 25px;
   border: 0;
   border-radius: 50%;
   background: #4156A1;
   cursor: pointer;
+}
+
+.sliderRed {
+  -webkit-appearance: none;
+  width: 200px;
+  height: 15px;
+  border-radius: 5px;
+  background: #FFFFFF;
+  outline: none;
+  opacity:0.7;
+  -webkit-transition: opacity .15s ease-in-out;
+  transition: opacity .15s ease-in-out;
+}
+.sliderRed:hover {
+  opacity:1;
+}
+.sliderRed::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #990000;
+  cursor: pointer;
+}
+.sliderRed::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border: 0;
+  border-radius: 50%;
+  background: #990000;
+  cursor: pointer;
+}
+
+#dimensionsInput {
+  width: 180px; /* Full-width */
+  font-size: 12px; /* Increase font-size */
+  padding: 8px 10px 8px 10px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
 }

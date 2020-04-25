@@ -16,7 +16,7 @@ function make2dArray(cols, rows) {
 var grid;
 var ncol;
 var nrow;
-var a = 10
+var a = 8
 
 // Define setup in which an array is created with "400/a" columns and rows.
 // Each cell is "a" pixels wide and long.
@@ -73,15 +73,15 @@ Cell.prototype.show = function() {
     fill(100,250,100);
     rect(this.x, this.y, this.a, this.a);
     if (this.agentLow) {
-      stroke(0);
+      stroke(55,94,151);
       fill(55,94,151);
       ellipse(this.x + this.a * 0.5, this.y + this.a * 0.5, this.a * 0.5);
     } else if (this.agentMed) {
-      stroke(0);
+      stroke(255,187,0);
       fill(255,187,0);
       ellipse(this.x + this.a * 0.5, this.y + this.a * 0.5, this.a * 0.5);
     } else if (this.agentHig) {
-      stroke(0);
+      stroke(251,101,66);
       fill(251,101,66);
       ellipse(this.x + this.a * 0.5, this.y + this.a * 0.5, this.a * 0.5);
     }
@@ -142,4 +142,117 @@ Cell.prototype.assignAgent = function(type) {
 
 function randomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
+}
+
+// -----------------------------------------------------------------------------
+// INTERACTIVE ELEMENTS
+// -----------------------------------------------------------------------------
+
+// Provide variable to allow for cluster modification.
+var sliderDev = document.getElementById("clusterDev");
+var sliderAgnt = document.getElementById("clusterAgnt");
+
+// Create function to randomize development.
+function randomDevelopment() {
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      grid[i][j].undevelop();
+    }
+  }
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      if (Math.round(Math.random()) == 1) {
+        grid[i][j].develop();
+      } else {
+        continue
+      }
+    }
+  }
+}
+
+// Create function to cluster development.
+function clusterDevelopment() {
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      grid[i][j].undevelop();
+    }
+  }
+  var sensitivity = sliderDev.value;
+  p5.prototype.noiseSeed(Math.round(Math.random()*100));
+  for (var i = 0; i < ncol; i++){
+    for (var j = 0; j < nrow; j++){
+      var val = p5.prototype.noise(i/sensitivity, j/sensitivity, 1.0);
+      if (val < 0.5) {
+        grid[i][j].develop();
+      } else {
+        continue
+      }
+    }
+  }
+}
+
+// Create function to randomly assign agents.
+function randomAgents() {
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      grid[i][j].agentLow = false;
+      grid[i][j].agentMed = false;
+      grid[i][j].agentHig = false;
+    }
+  }
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      if (!grid[i][j].developed) {
+        grid[i][j].assignAgent(randomInt(3));
+      } else {
+        continue;
+      }
+    }
+  }
+}
+
+// Create function to randomly assign agents in clusters.
+function clusterAgents() {
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      grid[i][j].agentLow = false;
+      grid[i][j].agentMed = false;
+      grid[i][j].agentHig = false;
+    }
+  }
+  var sensitivity = sliderAgnt.value;
+  p5.prototype.noiseSeed(Math.round(Math.random()*100));
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      if (!grid[i][j].developed) {
+        var val = p5.prototype.noise(i/sensitivity, j/sensitivity, 1.0);
+        if (val <= 0.33) {
+          grid[i][j].assignAgent(0);
+        } else if (val <= 0.66) {
+          grid[i][j].assignAgent(1);
+        } else if (val <= 1.00) {
+          grid[i][j].assignAgent(2);
+        }
+      } else {
+        continue;
+      }
+    }
+  }
+}
+
+// Define function that plays the model.
+function playModel() {
+
+}
+
+// Define function to clear the simulation.
+function clearSim() {
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      grid[i][j].developed = false;
+      grid[i][j].agentLow = false;
+      grid[i][j].agentMed = false;
+      grid[i][j].agentHig = false;
+    }
+  }
 }
