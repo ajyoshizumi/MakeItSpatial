@@ -25,27 +25,32 @@
   <button class="buttonBlue" onclick="randomDevelopment()" style="position: absolute; left: 430px; top: 80px">Randomize Development</button>
   <button class="buttonBlue" onclick="clusterDevelopment()" style="position: absolute; left: 430px; top: 120px">Cluster Development</button>
 
-  <!-- Insert development slider -->
-  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 150px; color: #FFFFFF">Spatial Dependency</h3>
+  <!-- Insert development sliders -->
+  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 150px; color: #FFFFFF">Development Level</h3>
   <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 200px">
-    <input type="range" min="1" max="11" value="6" class="sliderBlue" id="clusterDev">
+    <input type="range" min="0" max="10" value="5" class="sliderBlue" id="clusterDevLev">
+  </div>
+
+  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 210px; color: #FFFFFF">Spatial Dependency</h3>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 260px">
+    <input type="range" min="1" max="11" value="6" class="sliderBlue" id="clusterDevSen">
   </div>
 
   <!-- Insert agent buttons -->
-  <button class="buttonBlue" onclick="randomAgents()" style="position: absolute; left: 430px; top: 260px">Randomize Agents</button>
-  <button class="buttonBlue" onclick="clusterAgents()" style="position: absolute; left: 430px; top: 300px">Cluster Agents</button>
+  <button class="buttonBlue" onclick="randomAgents()" style="position: absolute; left: 430px; top: 320px">Randomize Agents</button>
+  <button class="buttonBlue" onclick="clusterAgents()" style="position: absolute; left: 430px; top: 360px">Cluster Agents</button>
 
   <!-- Insert agent slider -->
-  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 330px; color: #FFFFFF">Spatial Dependency</h3>
-  <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 380px">
+  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 390px; color: #FFFFFF">Spatial Dependency</h3>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 440px">
     <input type="range" min="1" max="11" value="6" class="sliderBlue" id="clusterAgnt">
   </div>
 
   <!-- Insert model play button -->
-  <button class="buttonGreen" onclick="playModel()" style="position: absolute; left: 430px; top: 440px">Play Model</button>
+  <button class="buttonGreen" onclick="playModel()" style="position: absolute; left: 430px; top: 484px">Play Model</button>
 
   <!-- Insert clear button -->
-  <button class="buttonRed" onclick="clearSim()">Clear Simulation</button>
+  <button class="buttonRed" onclick="clearSim()" style="position: absolute; left: 8px; top: 484px">Clear Simulation</button>
 
   <!-- Code script -->
   <script type="text/javascript" src="assets/js/abm.js"></script>

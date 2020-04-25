@@ -16,7 +16,8 @@ function make2dArray(cols, rows) {
 var grid;
 var ncol;
 var nrow;
-var a = 8
+var a = 8;
+var time = 0;
 
 // Define setup in which an array is created with "400/a" columns and rows.
 // Each cell is "a" pixels wide and long.
@@ -29,7 +30,7 @@ function setup() {
   grid = make2dArray(ncol, nrow)
   for (var i = 0; i < ncol; i++) {
     for (var j = 0; j < nrow; j++) {
-      grid[i][j] = new Cell(i*a, j*a, a);
+      grid[i][j] = new Cell(i, j, a);
     }
   }
 }
@@ -44,20 +45,54 @@ function draw() {
   }
 }
 
+// Create function to move time forward.
+function timeStep() {
+  time++;
+}
+
+// Define function that passes one step through the model.
+function modelStep() {
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      var threshold = Math.random();
+      if (!grid[i][j].developed) {
+        grid[i][j].countDevNeighbors();
+        if (grid[i][j].agentLow) {
+          if (threshold < 0.045 * grid[i][j].devNeighbors) {
+            grid[i][j].develop();
+          }
+        } else if (grid[i][j].agentMed) {
+          if (threshold < 0.085 * grid[i][j].devNeighbors) {
+            grid[i][j].develop();
+          }
+        } else if (grid[i][j].agentHig) {
+          if (threshold < 0.125 * grid[i][j].devNeighbors) {
+            grid[i][j].develop();
+          }
+        }
+      }
+    }
+  }
+  timeStep()
+}
+
 // -----------------------------------------------------------------------------
 // CELLS
 // -----------------------------------------------------------------------------
 
 // Define function that creates a single cell.
-function Cell(x, y, a) {
-  this.x = x;
-  this.y = y;
+function Cell(i, j, a) {
+  this.i = i;
+  this.j = j;
+  this.x = i*a;
+  this.y = j*a;
   this.a = a;
 
   this.developed = false;
   this.agentLow = false;
   this.agentMed = false;
   this.agentHig = false;
+  this.devNeighbors = 0;
 }
 
 // Define function that creates a rectangle to actually represent the cell.
@@ -88,9 +123,6 @@ Cell.prototype.show = function() {
   }
 }
 
-// Define function to assign agent based on the distribution selected by the user.
-
-
 // Define function that allows for action on mouse click.
 Cell.prototype.contains = function(x, y) {
   return (x > this.x && x < this.x + this.a && y > this.y && y < this.y + this.a);
@@ -112,6 +144,9 @@ function mousePressed() {
 // Define function to develop cell.
 Cell.prototype.develop = function() {
   this.developed = true;
+  this.agentLow = false;
+  this.agentMed = false;
+  this.agentHig = false;
 }
 
 // Define function to undevelop cell.
@@ -136,6 +171,27 @@ Cell.prototype.assignAgent = function(type) {
   }
 }
 
+// Create function to count developed cell neighbors.
+Cell.prototype.countDevNeighbors = function() {
+  var total = 0;
+  for (var xoff = -1; xoff <= 1; xoff++) {
+    var i = this.i + xoff;
+    if (i < 0 || i >= ncol) continue;
+
+    for (var yoff = -1; yoff <= 1; yoff++) {
+      var j = this.j + yoff;
+      if (j < 0 || j >= nrow) continue;
+
+        var neighbor = grid[i][j];
+        if (neighbor.developed) {
+          total++;
+        }
+    }
+  }
+    this.devNeighbors = total;
+}
+
+
 // -----------------------------------------------------------------------------
 // MISCELLANEOUS
 // -----------------------------------------------------------------------------
@@ -149,7 +205,8 @@ function randomInt(max) {
 // -----------------------------------------------------------------------------
 
 // Provide variable to allow for cluster modification.
-var sliderDev = document.getElementById("clusterDev");
+var sliderDevSen = document.getElementById("clusterDevSen");
+var sliderDevLev = document.getElementById("clusterDevLev");
 var sliderAgnt = document.getElementById("clusterAgnt");
 
 // Create function to randomize development.
@@ -159,9 +216,10 @@ function randomDevelopment() {
       grid[i][j].undevelop();
     }
   }
+  var level = sliderDevLev.value/10;
   for (var i = 0; i < ncol; i++) {
     for (var j = 0; j < nrow; j++) {
-      if (Math.round(Math.random()) == 1) {
+      if (Math.random() <= level) {
         grid[i][j].develop();
       } else {
         continue
@@ -177,12 +235,13 @@ function clusterDevelopment() {
       grid[i][j].undevelop();
     }
   }
-  var sensitivity = sliderDev.value;
+  var sensitivity = sliderDevSen.value;
+  var level = sliderDevLev.value/10;
   p5.prototype.noiseSeed(Math.round(Math.random()*100));
   for (var i = 0; i < ncol; i++){
     for (var j = 0; j < nrow; j++){
       var val = p5.prototype.noise(i/sensitivity, j/sensitivity, 1.0);
-      if (val < 0.5) {
+      if (val <= level) {
         grid[i][j].develop();
       } else {
         continue
@@ -240,13 +299,9 @@ function clusterAgents() {
   }
 }
 
-// Define function that plays the model.
-function playModel() {
-
-}
-
 // Define function to clear the simulation.
 function clearSim() {
+  time = 0;
   for (var i = 0; i < ncol; i++) {
     for (var j = 0; j < nrow; j++) {
       grid[i][j].developed = false;
@@ -255,4 +310,9 @@ function clearSim() {
       grid[i][j].agentHig = false;
     }
   }
+}
+
+// Define function to play the model.
+function playModel() {
+  modelStep()
 }
