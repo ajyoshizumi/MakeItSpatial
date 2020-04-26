@@ -7,50 +7,62 @@
   <!--Code scripts-->
   <script type="text/javascript" src="assets/js/p5.js"></script>
   <script type="text/javascript" src="assets/js/p5.sound.min.js"></script>
+  <script type="text/javascript" src="assets/js/plotly-latest.min.js"></script>
 </head>
 
 <body>
   <!-- Insert title -->
-  <title style="font-family: sans-serif">Landowner Agent Based Model | Make It Spatial</title>
+  <title style="font-family: sans-serif">Land Change Agent Based Model | Make It Spatial</title>
 
   <!-- Insert heading -->
-  <h1 style="font-family: sans-serif; color: #FFFFFF">Landowner Agent Based Model</h1>
+  <h1 style="font-family: sans-serif; color: #FFFFFF; position: absolute; left: 40px; top: 10px">Land Change Agent Based Model</h1>
 
   <!-- Insert model into page -->
-  <div id="abm">
+  <div id="abm" style="position: absolute; left: 40px; top: 80px">
     <!-- model gets placed here -->
   </div>
 
   <!-- Insert development buttons -->
-  <button class="buttonBlue" onclick="randomDevelopment()" style="position: absolute; left: 430px; top: 80px">Randomize Development</button>
-  <button class="buttonBlue" onclick="clusterDevelopment()" style="position: absolute; left: 430px; top: 120px">Cluster Development</button>
+  <button class="buttonBlue" onclick="randomDevelopment()" style="position: absolute; left: 470px; top: 80px">Randomize Development</button>
+  <button class="buttonBlue" onclick="clusterDevelopment()" style="position: absolute; left: 470px; top: 120px">Cluster Development</button>
 
   <!-- Insert development sliders -->
-  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 150px; color: #FFFFFF">Development Level</h3>
-  <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 200px">
+  <h3 style="font-family: sans-serif; position: absolute; left: 475px; top: 150px; color: #FFFFFF">Development Level</h3>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 200px">
     <input type="range" min="0" max="10" value="5" class="sliderBlue" id="clusterDevLev">
   </div>
 
-  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 210px; color: #FFFFFF">Spatial Dependency</h3>
-  <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 260px">
+  <h3 style="font-family: sans-serif; position: absolute; left: 475px; top: 210px; color: #FFFFFF">Spatial Dependency</h3>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 260px">
     <input type="range" min="1" max="11" value="6" class="sliderBlue" id="clusterDevSen">
   </div>
 
   <!-- Insert agent buttons -->
-  <button class="buttonBlue" onclick="randomAgents()" style="position: absolute; left: 430px; top: 320px">Randomize Agents</button>
-  <button class="buttonBlue" onclick="clusterAgents()" style="position: absolute; left: 430px; top: 360px">Cluster Agents</button>
+  <button class="buttonBlue" onclick="randomAgents()" style="position: absolute; left: 470px; top: 320px">Randomize Agents</button>
+  <button class="buttonBlue" onclick="clusterAgents()" style="position: absolute; left: 470px; top: 360px">Cluster Agents</button>
 
   <!-- Insert agent slider -->
-  <h3 style="font-family: sans-serif; position: absolute; left: 435px; top: 390px; color: #FFFFFF">Spatial Dependency</h3>
-  <div class="slidecontainer" style="width: 25%; position: absolute; left: 430px; top: 440px">
+  <h3 style="font-family: sans-serif; position: absolute; left: 475px; top: 390px; color: #FFFFFF">Spatial Dependency</h3>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 440px">
     <input type="range" min="1" max="11" value="6" class="sliderBlue" id="clusterAgnt">
   </div>
 
   <!-- Insert model play button -->
-  <button class="buttonGreen" onclick="playModel()" style="position: absolute; left: 430px; top: 484px">Play Model</button>
+  <button class="buttonGreen" onclick="playModel()" style="position: absolute; left: 470px; top: 484px">Play Model</button>
 
   <!-- Insert clear button -->
-  <button class="buttonRed" onclick="clearSim()" style="position: absolute; left: 8px; top: 484px">Clear Simulation</button>
+  <button class="buttonRed" onclick="clearSim()" style="position: absolute; left: 40px; top: 484px">Clear Simulation Run</button>
+
+  <!-- Insert live chart -->
+  <div id="chart" style="position: absolute; left: 700px; top: 20px"></div>
+
+  <div id="textBody" style="position: absolute; left: 40px; top: 540px">
+    <h2 style="font-family: sans-serif; color: #FFFFFF">Agent Based Models</h2>
+    <p style="color: #FFFFFF">This is text <br/> this is more text</p>
+    <p style="color: #FFFFFF">This is text</p>
+
+    <h2 style="font-family: sans-serif; color: #FFFFFF">References</h2>
+  </div>
 
   <!-- Code script -->
   <script type="text/javascript" src="assets/js/abm.js"></script>

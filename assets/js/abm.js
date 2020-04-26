@@ -2,22 +2,20 @@
 // CORE MODEL
 // -----------------------------------------------------------------------------
 
-// Define function to create a 2D array.
-function make2dArray(cols, rows) {
-  var arr = new Array(cols);
-  for (var i = 0; i < arr.length; i++) {
-    arr[i] = new Array(rows)
-  }
-  return arr;
-}
-
-
-// Define key variables.
+// Define key model variables.
 var grid;
 var ncol;
 var nrow;
 var a = 8;
 var time = 0;
+var play;
+
+// Define key chart variables.
+var tArray = [];
+var dArray = [];
+var lArray = [];
+var mArray = [];
+var hArray = [];
 
 // Define setup in which an array is created with "400/a" columns and rows.
 // Each cell is "a" pixels wide and long.
@@ -33,6 +31,7 @@ function setup() {
       grid[i][j] = new Cell(i, j, a);
     }
   }
+  createChart([0],[0],[0],[0],[0]);
 }
 
 // Create funtion to draw the cells.
@@ -62,15 +61,15 @@ function modelStep() {
       var threshold = Math.random();
       if (!grid[i][j].developed) {
         if (grid[i][j].agentLow) {
-          if (threshold < 0.01 + grid[i][j].devNeighbors/64) {
+          if (threshold < 0.001 + grid[i][j].devNeighbors/32) {
             grid[i][j].develop();
           }
         } else if (grid[i][j].agentMed) {
-          if (threshold < 0.05 + grid[i][j].devNeighbors/32) {
+          if (threshold < 0.001 + grid[i][j].devNeighbors/16) {
             grid[i][j].develop();
           }
         } else if (grid[i][j].agentHig) {
-          if (threshold < 0.10 + grid[i][j].devNeighbors/16) {
+          if (threshold < 0.001 + grid[i][j].devNeighbors/8) {
             grid[i][j].develop();
           }
         }
@@ -78,6 +77,51 @@ function modelStep() {
     }
   }
   timeStep()
+}
+
+// Define function to count the total number of developed cells.
+
+function countTotals(type, level) {
+  var devTotal = 0;
+  var agentLowTotal = 0;
+  var agentMedTotal = 0;
+  var agentHigTotal = 0;
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
+      devTotal += Number(grid[i][j].developed)
+      agentLowTotal += Number(grid[i][j].agentLow);
+      agentMedTotal += Number(grid[i][j].agentMed);
+      agentHigTotal += Number(grid[i][j].agentHig);
+    }
+  }
+  if (type == "development") {
+    return devTotal;
+  } else if (type == "agent" && level == "low") {
+    return agentLowTotal;
+  } else if (type == "agent" && level == "medium") {
+    return agentMedTotal;
+  } else if (type == "agent" && level == "high") {
+    return agentHigTotal;
+  } else {
+    return error("Invalid Entry");
+  }
+}
+
+// Define function to store the total counts in each time period.
+function updateChart() {
+  // Store cell counts for given attributes in a given time period.
+  var devTotal = countTotals("development");
+  var lowTotal = countTotals("agent", "low");
+  var medTotal = countTotals("agent", "medium");
+  var higTotal = countTotals("agent", "high");
+  // Store cell counts and time within an array.
+  tArray[time] = time;
+  dArray[time] = devTotal;
+  lArray[time] = lowTotal;
+  mArray[time] = medTotal;
+  hArray[time] = higTotal;
+  // Update chart.
+  createChart(tArray,dArray,lArray,mArray,hArray);
 }
 
 // -----------------------------------------------------------------------------
@@ -195,15 +239,6 @@ Cell.prototype.countDevNeighbors = function() {
     this.devNeighbors = total;
 }
 
-
-// -----------------------------------------------------------------------------
-// MISCELLANEOUS
-// -----------------------------------------------------------------------------
-
-function randomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-
 // -----------------------------------------------------------------------------
 // INTERACTIVE ELEMENTS
 // -----------------------------------------------------------------------------
@@ -306,6 +341,13 @@ function clusterAgents() {
 // Define function to clear the simulation.
 function clearSim() {
   time = 0;
+  tArray = [];
+  dArray = [];
+  lArray = [];
+  mArray = [];
+  hArray = [];
+  createChart([0],[0],[0],[0],[0]);
+  clearTimeout(play);
   for (var i = 0; i < ncol; i++) {
     for (var j = 0; j < nrow; j++) {
       grid[i][j].developed = false;
@@ -318,5 +360,126 @@ function clearSim() {
 
 // Define function to play the model.
 function playModel() {
-  modelStep()
+  // Clear play variable to avoid simulataneous double activation.
+  clearTimeout(play);
+  play = setTimeout(function() {
+    // Update chart.
+    updateChart()
+    // Count level of development.
+    var devTotal = countTotals("development");
+    // Next model step.
+    modelStep();
+    // Loop until development is complete.
+    if(devTotal < nrow * ncol) {
+      playModel();
+    }
+  }, 200)
+}
+
+// -----------------------------------------------------------------------------
+// PLOTS
+// -----------------------------------------------------------------------------
+
+// Define function to draw chart when new data is added.
+function createChart(timeArray,devArray,lowArray,medArray,higArray) {
+  // Create development trace.
+  var traceDev = {
+    x: timeArray,
+    y: devArray,
+    mode: "lines+markers",
+    name: "Development",
+    marker: {
+      color: "rgb(140,140,140)",
+      size: 4,
+      line: {
+        color: "rgb(140,140,140)",
+        width: 2
+      }
+    }
+  }
+  // Create low agent trace.
+  var traceLow = {
+    x: timeArray,
+    y: lowArray,
+    mode: "lines+markers",
+    name: "Agent Low",
+    marker: {
+      color: "rgb(55,94,151)",
+      size: 4,
+      line: {
+        color: "rgb(55,94,151)",
+        width: 2
+      }
+    }
+  }
+  // Create medium agent trace.
+  var traceMed = {
+    x: timeArray,
+    y: medArray,
+    mode: "lines+markers",
+    name: "Agent Medium",
+    marker: {
+      color: "rgb(255,187,0)",
+      size: 4,
+      line: {
+        color: "rgb(255,187,0)",
+        width: 2
+      }
+    }
+  }
+  // Create high agent trace.
+  var traceHig = {
+    x: timeArray,
+    y: higArray,
+    mode: "lines+markers",
+    name: "Agent High",
+    marker: {
+      color: "rgb(251,101,66)",
+      size: 4,
+      line: {
+        color: "rgb(251,101,66)",
+        width: 2
+      }
+    }
+  }
+  // Define layout parameters.
+  var layout = {
+    width: 900,
+    height: 500,
+    xaxis: {
+      range: [0,timeArray.length],
+      title: "Time"
+    },
+    yaxis: {
+      range: [0,2500],
+      title: "Count"
+    },
+    paper_bgcolor: "rgba(0,0,0,0)",
+    plot_bgcolor: "rgba(0,0,0,0)",
+    font: {
+      color: "#FFFFFF"
+    }
+  }
+  // Create variable to hold our chart parameters.
+  var data = [traceDev, traceLow, traceMed, traceHig]
+  // Plot chart.
+  Plotly.newPlot("chart", data, layout)
+}
+
+// -----------------------------------------------------------------------------
+// MISCELLANEOUS
+// -----------------------------------------------------------------------------
+
+// Define function to return a random integer between 0 and a specified value.
+function randomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+// Define function to create a 2D array.
+function make2dArray(cols, rows) {
+  var arr = new Array(cols);
+  for (var i = 0; i < arr.length; i++) {
+    arr[i] = new Array(rows)
+  }
+  return arr;
 }
