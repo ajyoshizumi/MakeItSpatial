@@ -54,15 +54,19 @@ function timeStep() {
 function modelStep() {
   for (var i = 0; i < ncol; i++) {
     for (var j = 0; j < nrow; j++) {
+      grid[i][j].countDevNeighbors();
+    }
+  }
+  for (var i = 0; i < ncol; i++) {
+    for (var j = 0; j < nrow; j++) {
       var threshold = Math.random();
       if (!grid[i][j].developed) {
-        grid[i][j].countDevNeighbors();
         if (grid[i][j].agentLow) {
-          if (threshold < 0.01 + grid[i][j].devNeighbors/16) {
+          if (threshold < 0.01 + grid[i][j].devNeighbors/64) {
             grid[i][j].develop();
           }
         } else if (grid[i][j].agentMed) {
-          if (threshold < 0.05 + grid[i][j].devNeighbors/16) {
+          if (threshold < 0.05 + grid[i][j].devNeighbors/32) {
             grid[i][j].develop();
           }
         } else if (grid[i][j].agentHig) {
