@@ -58,15 +58,15 @@ function modelStep() {
       if (!grid[i][j].developed) {
         grid[i][j].countDevNeighbors();
         if (grid[i][j].agentLow) {
-          if (threshold < 0.045 * grid[i][j].devNeighbors) {
+          if (threshold < 0.01 + grid[i][j].devNeighbors/16) {
             grid[i][j].develop();
           }
         } else if (grid[i][j].agentMed) {
-          if (threshold < 0.085 * grid[i][j].devNeighbors) {
+          if (threshold < 0.05 + grid[i][j].devNeighbors/16) {
             grid[i][j].develop();
           }
         } else if (grid[i][j].agentHig) {
-          if (threshold < 0.125 * grid[i][j].devNeighbors) {
+          if (threshold < 0.10 + grid[i][j].devNeighbors/16) {
             grid[i][j].develop();
           }
         }
