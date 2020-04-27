@@ -56,12 +56,59 @@
   <!-- Insert live chart -->
   <div id="chart" style="position: absolute; left: 700px; top: 20px"></div>
 
-  <div id="textBody" style="position: absolute; left: 40px; top: 540px">
-    <h2 style="font-family: sans-serif; color: #FFFFFF">Agent Based Models</h2>
-    <p style="color: #FFFFFF">This is text <br/> this is more text</p>
-    <p style="color: #FFFFFF">This is text</p>
+  <div id="textBody" style="position: absolute; left: 40px; top: 540px; width: 50%">
+    <!-- Section about agent based models -->
+    <h2 style="font-family: sans-serif; color: #FFFFFF">About Agent Based Models</h2>
+    <p style="color: #FFFFFF">
+      The term agent-based model (ABM) can be used to describe any model that leverages individual autonomous elements called agents. Depending on what is being modeled, agents can represent a wide variety of things. For example, in this model, the agents are landowners with either low, medium, or high willingness to sell their property. That said, there are examples of agents representing predator and prey species, vehicles in traffic, economic actors, and so much more (Wilensky and Reisman 2006, Bonabeau 2002)!
+    <p style="color: #FFFFFF">
+      Because ABMs allow for agents to interact both with each other and with their environment, these types of models can be particularly useful for answering questions about complex systems or scenarios. For example, ABMs have been used to investigate which methods of boarding an aircraft are most efficient (Iyigunlu et al. 2014). On the surface, the question might not seem so complex, but given the amount of different ways passengers could board (e.g., back-to-front, random, window-to-aisle, and so on), comparing between options is likely not so straightforward. If we add to this the fact that the environment (i.e., aisle space) could be a major determining factor and that there could be a wide variety of behaviors and baggage storage needs across passengers, it becomes clearer just how difficult it could be to compare between methods in a realistic way.
+    </p>
+    <p style="color: #FFFFFF">
+      In this aircraft example, the agents are the passengers tasked with loading their baggage and finding their seats. The environment can be understood as the aisle and seats. These environment elements indicate how and where the agents can move. If the aisle is narrow, we might implement an agent-to-agent interaction rule such that passengers may not move through another passenger. Additionally, we might assign different passengers varying overhead luggage loading times. Given how many factors could influence a single model run, we would likely want to run the simulation many times for each boarding method to ensure our conclusions were not skewed by outliers.
+    </p>
 
+    <!-- Section about this model -->
+    <h2 style="font-family: sans-serif; color: #FFFFFF">About This Land Change Model</h2>
+    <p style="color: #FFFFFF">
+      As indicated earlier on, this model is not about airplane boarding, but I do think that the airplane example provides a useful frame of reference for thinking about ABMs. Importantly, the current iteration of this land change model is a toy model built for exploring how the distribution of development and agents across the environment could affect the speed and shape of development. The model has not yet been calibrated using real world data, but I hope it provides a useful introduction to ABMs and rural-to-urban land change.
+    </p>
+    <p style="color: #FFFFFF">
+      In this model, the agents are landowners with either low, medium, or high willingness-to-sell their property. Landowners with low willingness-to-sell are marked in blue, landowners with medium willingness-to-sell are marked in yellow, and landowners with high willingness-to-sell are marked in red. The environment can take only one of two states: developed (indicated by gray) or undeveloped (indicated by green). Landowner agents may only inhabit undeveloped cells.
+    </p>
+    <p style="color: #FFFFFF">
+      Each time step in the model represents one year. In each time step, agents are presented with a decision to either retain their property or sell it to a developer. All agent types have been assigned a low base willingness-to-sell of 0.1%. However, I allow proximity to development to dramatically shift this. For each developed cell directly adjacent to an agent, the agent’s willingness-to-sell increases. Agents with high-willingness to sell are twice as sensitive to development as agents with medium willingness-to-sell. Similarly, agents with medium willingness-to-sell are twice as sensitive to development as agents with low willingness-to-sell.
+    </p>
+    <p style="color: #FFFFFF">
+      The inclusion of agent sensitivity to nearby development was largely informed by a research paper from Koch et al. that similarly used neighboring spatial proximity as a proxy for peer influence in an ABM (Koch et al. 2019). Other publications have also indicated that social factors such as social interaction and knowledge transfer can influence individuals’ decision making around land management (Little and McDonald 2007, Schlüter et al. 2017). Importantly, as noted in the paper from Koch et al., “peer-influence is not necessarily defined by geographic space, [but] immediate neighbors can have a particularly strong effect on decisions when it comes to land management” (Koch et al. 2019).
+    </p>
+
+    <!-- Section about the visualization -->
+    <h2 style="font-family: sans-serif; color: #FFFFFF">About the Visualization</h2>
+    <p style="color: #FFFFFF">
+      ...
+    </p>
+
+    <!-- References section -->
     <h2 style="font-family: sans-serif; color: #FFFFFF">References</h2>
+    <p style="color: #FFFFFF">
+      Bonabeau E. 2002. Agent-based modeling: Methods and techniques for simulating human systems. PNAS, 99(3):7280-7287. DOI: 10.1073/pnas.082080899
+    </p>
+    <p style="color: #FFFFFF">
+      Iyigunlu S, Fookes C, Yarlagadda P. 2014. Agent-based modelling of aircraft boarding methods. 2014 4th International Conference On Simulation And Modeling Methodologies, Technologies And Applications (SIMULTECH), Vienna, Austria, 148-154. DOI: 10.5220/0005033601480154
+    </p>
+    <p style="color: #FFFFFF">
+    Kock J, Dorning MA, Van Berkel DB, Beck SM, Sanchez GM, Shashidharan A, Smart LS, Zhang Q, Smith JW, Meentemeyer RK. 2019. Modeling landowner interactions and development patterns at the urban fringe. Landscape and Urban Planning, 182:101-113. DOI: 10.1016/j.landurbplan.2018.09.023
+    </p>
+    <p style="color: #FFFFFF">
+      Little LR, McDonald AD. 2007. Simulations of agents in social networks harvesting a resource. Ecological Modeling, 204(3-4):379-386. DOI: 10.1016/j.ecolmodel.2007.01.013
+    </p>
+    <p style="color: #FFFFFF">
+      Schlüter M, Baeza A, Dressler G, Frank K, Groeneveld J, Jager W, Janssen MA, McAllister RRJ, Müller B, Orach K, Schwarz N, Wijermans N. 2017. A framework for mapping and comparing behavioural theories in models of social-ecological systems. Ecological Economics, 131:21-35. DOI: 10.1016/j.ecolecon.2016.08.008
+    </p>
+    <p style="color: #FFFFFF">
+      Wilensky U, Reisman K. 2006. Thinking Like a Wolf, a Sheep, or a Firefly: Learning Biology Through Constructing and Testing Computational Theories -- an Embodied Modeling Approach. Accessed 26 April 2020. Retrieved from http://ccl.northwestern.edu/papers/wolfsheep.pdf
+    </p>
   </div>
 
   <!-- Code script -->
