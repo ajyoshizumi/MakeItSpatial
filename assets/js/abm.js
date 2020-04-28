@@ -36,7 +36,7 @@ function setup() {
 
 // Create funtion to draw the cells.
 function draw() {
-  background(40);
+  background(40,44,52);
   for (var i = 0; i < ncol; i++) {
     for (var j = 0; j < nrow; j++) {
       grid[i][j].show();
