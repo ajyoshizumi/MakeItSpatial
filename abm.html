@@ -1,63 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- Page title -->
+  <title style="font-family: sans-serif">Land Change Agent Based Model | Make It Spatial</title>
+
   <!--Style scripts-->
   <link rel="stylesheet" href="assets/css/abm.css" />
 
   <!--Code scripts-->
-    <script type="text/javascript" src="assets/js/abm.js" defer></script>
-  <script type="text/javascript" src="assets/js/p5.js"></script>
-  <script type="text/javascript" src="assets/js/p5.sound.min.js"></script>
-  <script type="text/javascript" src="assets/js/plotly-latest.min.js"></script>
+  <script type="text/javascript" src="assets/js/abm.js" defer></script>
+  <script type="text/javascript" src="assets/js/p5.js" defer></script>
+  <script type="text/javascript" src="assets/js/p5.sound.min.js" defer></script>
+  <script type="text/javascript" src="assets/js/plotly-latest.min.js" defer></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/skel.min.js"></script>
+  <script src="assets/js/util.js"></script>
 </head>
 
 <body>
-  <!-- Insert title -->
-  <title style="font-family: sans-serif">Land Change Agent Based Model | Make It Spatial</title>
+
+  <!-- Header -->
+    <header id="header">
+      <nav id="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="lessons.html">Lessons</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <a href="#menu" class="navPanelToggle" id="navButton"><span class="fa fa-bars"></span></a>
 
   <!-- Insert heading -->
-  <h1 style="font-family: sans-serif; color: #FFFFFF; position: absolute; left: 40px; top: 10px">Land Change Agent Based Model</h1>
+  <h1 style="font-family: sans-serif; color: #FFFFFF; position: absolute; left: 40px; top: 90px">Land Change Agent Based Model</h1>
+  <h5 style="font-family: sans-serif; color: #FFFFFF; opacity: 0.8; position: absolute; left: 40px; top: 120px">Last Updated: 2020-04-28</h5>
 
   <!-- Insert model into page -->
-  <div id="abm" style="position: absolute; left: 40px; top: 80px">
+  <div id="abm" style="position: absolute; left: 40px; top: 180px">
     <!-- model gets placed here -->
   </div>
 
   <!-- Insert development buttons -->
-  <button class="buttonBlue" onclick="randomDevelopment()" style="position: absolute; left: 470px; top: 80px">Randomize Development</button>
-  <button class="buttonBlue" onclick="clusterDevelopment()" style="position: absolute; left: 470px; top: 120px">Cluster Development</button>
+  <button class="buttonBlue" onclick="randomDevelopment()" style="position: absolute; left: 470px; top: 180px">Random Development</button>
+  <button class="buttonBlue" onclick="clusterDevelopment()" style="position: absolute; left: 470px; top: 220px">Cluster Development</button>
 
   <!-- Insert development sliders -->
-  <h3 style="font-family: sans-serif; position: absolute; left: 475px; top: 150px; color: #FFFFFF">Development Level</h3>
-  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 200px">
+  <h4 style="font-family: sans-serif; position: absolute; left: 475px; top: 245px; color: #FFFFFF">Development Level</h4>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 300px">
     <input type="range" min="0" max="10" value="5" class="sliderBlue" id="clusterDevLev">
   </div>
 
-  <h3 style="font-family: sans-serif; position: absolute; left: 475px; top: 210px; color: #FFFFFF">Spatial Dependency</h3>
-  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 260px">
+  <h4 style="font-family: sans-serif; position: absolute; left: 475px; top: 305px; color: #FFFFFF">Spatial Dependency</h4>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 360px">
     <input type="range" min="1" max="11" value="6" class="sliderBlue" id="clusterDevSen">
   </div>
 
   <!-- Insert agent buttons -->
-  <button class="buttonBlue" onclick="randomAgents()" style="position: absolute; left: 470px; top: 320px">Randomize Agents</button>
-  <button class="buttonBlue" onclick="clusterAgents()" style="position: absolute; left: 470px; top: 360px">Cluster Agents</button>
+  <button class="buttonBlue" onclick="randomAgents()" style="position: absolute; left: 470px; top: 420px">Random Agents</button>
+  <button class="buttonBlue" onclick="clusterAgents()" style="position: absolute; left: 470px; top: 460px">Cluster Agents</button>
 
   <!-- Insert agent slider -->
-  <h3 style="font-family: sans-serif; position: absolute; left: 475px; top: 390px; color: #FFFFFF">Spatial Dependency</h3>
-  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 440px">
+  <h4 style="font-family: sans-serif; position: absolute; left: 475px; top: 485px; color: #FFFFFF">Spatial Dependency</h4>
+  <div class="slidecontainer" style="width: 25%; position: absolute; left: 470px; top: 540px">
     <input type="range" min="1" max="11" value="6" class="sliderBlue" id="clusterAgnt">
   </div>
 
   <!-- Insert model play button -->
-  <button class="buttonGreen" onclick="playModel()" style="position: absolute; left: 470px; top: 484px">Play Model</button>
+  <button class="buttonGreen" onclick="playModel()" style="position: absolute; left: 470px; top: 584px">Play Model</button>
 
   <!-- Insert clear button -->
-  <button class="buttonRed" onclick="clearSim()" style="position: absolute; left: 40px; top: 484px">Clear Simulation Run</button>
+  <button class="buttonRed" onclick="clearSim()" style="position: absolute; left: 40px; top: 584px">Clear Simulation Run</button>
 
   <!-- Insert live chart -->
-  <div id="chart" style="position: absolute; left: 700px; top: 20px"></div>
+  <div id="chart" style="position: absolute; left: 700px; top: 120px"></div>
 
-  <div id="textBody" style="position: absolute; left: 40px; top: 540px; width: 50%">
+  <div id="textBody" style="position: absolute; left: 40px; top: 640px; width: 60%">
     <!-- Section about agent based models -->
     <h2 style="font-family: sans-serif; color: #FFFFFF">About Agent Based Models</h2>
     <p style="color: #FFFFFF">
