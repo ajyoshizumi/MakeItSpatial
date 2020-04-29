@@ -527,7 +527,7 @@ function make2dArray(cols, rows) {
 
 			// Navigation Panel Toggle.
 				$('<a href="#navPanel" class="navPanelToggle"></a>')
-					.appendTo(document.getElementById("navButton"));
+					.appendTo($body);
 
 			// Navigation Panel.
 				$(
