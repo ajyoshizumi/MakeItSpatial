@@ -1,0 +1,62 @@
+<html>
+<body>
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div id="sankey_multiple" style="width: 900px; height: 300px;"></div>
+
+<script type="text/javascript">
+  google.charts.load("current", {packages:["sankey"]});
+  google.charts.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'From');
+    data.addColumn('string', 'To');
+    data.addColumn('number', 'Weight');
+    data.addRows([
+      [ '[S] Bark residue' ,  '[P] Fuel byproducts' ,  46357.7721577105],
+      [ '[S] Bark residue' ,  '[P] Miscellaneous byproducts ' ,  22594.8886268197],
+      [ '[S] Bark residue' ,  '[P] Not Used' ,  84.1221605931614],
+      [ '[S] Nongrowing-stock' ,  '[P] Bioenergy/Fuelwood' ,  11702.0651853592],
+      [ '[S] Nongrowing-stock' ,  '[P] Miscellaneous' ,  2515.63213168085],
+      [ '[S] Nongrowing-stock' ,  '[P] Not Used' ,  131911.370176868],
+      [ '[S] Nongrowing-stock' ,  '[P] Pulpwood' ,  26479.815235559],
+      [ '[S] Nongrowing-stock' ,  '[P] Saw logs' ,  4761.51169586519],
+      [ '[S] Nongrowing-stock' ,  '[P] Veneer logs' ,  1163.03672059542],
+      [ '[S] Not Used' ,  '[P] D.O.E. Residential Fuelwood' ,  44308],
+      [ '[S] Not Used' ,  '[P] Fiber byproducts' ,  38.6172674598644],
+      [ '[S] Poletimber growing stock' ,  '[P] Bioenergy/Fuelwood' ,  5394.87196918805],
+      [ '[S] Poletimber growing stock' ,  '[P] Miscellaneous' ,  18349.9773973344],
+      [ '[S] Poletimber growing stock' ,  '[P] Not Used' ,  38687.9605747547],
+      [ '[S] Poletimber growing stock' ,  '[P] Pulpwood' ,  203178.272008992],
+      [ '[S] Poletimber growing stock' ,  '[P] Saw logs' ,  7080.45544636024],
+      [ '[S] Poletimber growing stock' ,  '[P] Veneer logs' ,  16372.8610624577],
+      [ '[S] Sawtimber growing stock' ,  '[P] Bioenergy/Fuelwood' ,  34322.3395927577],
+      [ '[S] Sawtimber growing stock' ,  '[P] Miscellaneous' ,  15080.9124958545],
+      [ '[S] Sawtimber growing stock' ,  '[P] Not Used' ,  51649.6052639068],
+      [ '[S] Sawtimber growing stock' ,  '[P] Pulpwood' ,  62450.5224754883],
+      [ '[S] Sawtimber growing stock' ,  '[P] Saw logs' ,  294544.221740569],
+      [ '[S] Sawtimber growing stock' ,  '[P] Veneer logs' ,  13449.3794111784],
+      [ '[S] Wood residue (coarse)' ,  '[P] Fiber byproducts' ,  99142.7117942072],
+      [ '[S] Wood residue (coarse)' ,  '[P] Fuel byproducts' ,  6949.23661540947],
+      [ '[S] Wood residue (coarse)' ,  '[P] Miscellaneous byproducts ' ,  4453.15147066523],
+      [ '[S] Wood residue (coarse)' ,  '[P] Not Used' ,  217.214197293087],
+      [ '[S] Wood residue (fine)' ,  '[P] Fiber byproducts' ,  6750.45514267114],
+      [ '[S] Wood residue (fine)' ,  '[P] Fuel byproducts' ,  56654.9187862915],
+      [ '[S] Wood residue (fine)' ,  '[P] Miscellaneous byproducts ' ,  21670.0210721496],
+      [ '[S] Wood residue (fine)' ,  '[P] Not Used' ,  369.326388961673]
+
+
+    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
+    chart.draw(data, options);
+   }
+</script>
+</body>
+</html>

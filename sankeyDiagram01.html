@@ -1,0 +1,56 @@
+<html>
+<body>
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div id="sankey_multiple" style="width: 900px; height: 300px;"></div>
+
+<script type="text/javascript">
+  google.charts.load("current", {packages:["sankey"]});
+  google.charts.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'From');
+    data.addColumn('string', 'To');
+    data.addColumn('number', 'Weight');
+    data.addRows([
+      [ '[S] Bark residue' ,  '[RC] Mill residues' ,  69036.7829451233],
+      [ '[S] Nongrowing stock' ,  '[RC] Logging residues' ,  119918.549295863],
+      [ '[S] Nongrowing stock' ,  '[RC] Other removals' ,  11992.820881005],
+      [ '[S] Nongrowing stock' ,  '[RC] Roundwood product' ,  46622.0609690598],
+      [ '[S] Not Used' ,  '[RC] D.O.E. residential fuelwood' ,  44308],
+      [ '[S] Not Used' ,  '[RC] Mill residues' ,  38.6172674598644],
+      [ '[S] Poletimber growing stock' ,  '[RC] Logging residues' ,  34266.4215693391],
+      [ '[S] Poletimber growing stock' ,  '[RC] Other removals' ,  4421.53900541554],
+      [ '[S] Poletimber growing stock' ,  '[RC] Roundwood product' ,  250376.437884333],
+      [ '[S] Sawtimber growing stock' ,  '[RC] Logging residues' ,  46578.1443944452],
+      [ '[S] Sawtimber growing stock' ,  '[RC] Other removals' ,  5071.4608694616],
+      [ '[S] Sawtimber growing stock' ,  '[RC] Roundwood product' ,  419847.375715846],
+      [ '[S] Wood residue (coarse)' ,  '[RC] Mill residues' ,  110762.314077575],
+      [ '[S] Wood residue (fine)' ,  '[RC] Mill residues' ,  85444.7213900739],
+      [ '[RC] D.O.E. residential fuelwood' ,  '[P] D.O.E. residential fuelwood' ,  44308],
+      [ '[RC] Logging residues' ,  '[P] Not Used' ,  200763.115259648],
+      [ '[RC] Mill residues' ,  '[P] Fiber byproducts' ,  105931.784204338],
+      [ '[RC] Mill residues' ,  '[P] Fuel byproducts' ,  109961.927559411],
+      [ '[RC] Mill residues' ,  '[P] Miscellaneous byproducts ' ,  48718.0611696345],
+      [ '[RC] Mill residues' ,  '[P] Not Used' ,  670.662746847922],
+      [ '[RC] Other removals' ,  '[P] Not Used' ,  21485.8207558821],
+      [ '[RC] Roundwood product' ,  '[P] Bioenergy/Fuelwood' ,  51419.276747305],
+      [ '[RC] Roundwood product' ,  '[P] Miscellaneous' ,  35946.5220248697],
+      [ '[RC] Roundwood product' ,  '[P] Pulpwood' ,  292108.609720039],
+      [ '[RC] Roundwood product' ,  '[P] Saw logs' ,  306386.188882795],
+      [ '[RC] Roundwood product' ,  '[P] Veneer logs' ,  30985.2771942316]
+
+    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
+    chart.draw(data, options);
+   }
+</script>
+</body>
+</html>
