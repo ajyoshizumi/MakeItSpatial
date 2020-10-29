@@ -1,4 +1,4 @@
 # PersonalWebsite
 
-Personal website and learning resource
+Personal website and learning resource. Under construction.
  
